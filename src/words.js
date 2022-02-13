@@ -30,6 +30,7 @@ const words = [
   "BEEBAW",
   "HONEET",
   "MOOGIE",
+  "MOOGUS",
   "BUNGLE",
   "BLORGY",
   "BEEGIE",
