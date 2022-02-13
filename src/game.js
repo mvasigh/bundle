@@ -77,7 +77,7 @@ function checkWord(state) {
     .join("");
 
   if (!state.words.includes(word)) {
-    console.log("Does not include word: ", word);
+    console.log("Does not include word: ", word, state.words);
     throw new Error("Invalid word!");
   }
 
@@ -118,9 +118,13 @@ function selectLetterIndex(state, letter, newIndex) {
  * @param {GameState} state
  */
 function playAgain(prevState) {
-  return createInitialState(
+  const newState = createInitialState(
     prevState.words.filter((w) => w !== prevState.winner)
   );
+
+  newState.words.push(prevState.winner);
+
+  return newState;
 }
 
 /**
