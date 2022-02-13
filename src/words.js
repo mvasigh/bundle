@@ -23,6 +23,7 @@ const words = [
   "BEEBAW",
   "HONEET",
   "MOOGIE",
+  "BUNGLE",
 ];
 
 export default [

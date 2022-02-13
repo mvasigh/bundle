@@ -18,8 +18,8 @@ export const states = {
   DEFEAT: "defeat",
 };
 
-const random = (list) => list[Math.floor(Math.random() * list.length)];
-const range = (start, end) =>
+export const random = (list) => list[Math.floor(Math.random() * list.length)];
+export const range = (start, end) =>
   Array.from({ length: end - start }, (_, i) => start + i);
 
 /**
