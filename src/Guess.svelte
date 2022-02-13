@@ -41,7 +41,7 @@
     width: 100%;
     font-size: var(--font-size-6);
     font-weight: var(--font-weight-7);
-    line-height: 1.6;
+    line-height: 1.4;
     text-align: center;
     border-radius: var(--radius-2);
     box-shadow: var(--shadow-2);
