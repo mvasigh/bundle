@@ -1,11 +1,30 @@
 :root {
 	--max-width: 800px;
+
+	--color-background: var(--gray-1);
+	--color-background-2: var(--gray-3);
+	--color-text-1: var(--gray-9);
+	--color-text-2: var(--gray-7);
+	--color-background-gradient: var(--gradient-5);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-background: var(--gray-9);
+		--color-background-2: var(--gray-7);
+		--color-text-1: var(--gray-1);
+		--color-text-2: var(--gray-4);
+		--color-background-gradient: var(--gradient-8);
+	}
 }
 
 html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
+
+	color: var(--color-text-1);
+	background-color: var(--color-background);
 }
 
 body {

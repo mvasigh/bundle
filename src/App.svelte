@@ -3,12 +3,11 @@
   import { createGameStore, states, MAX_GUESSES } from "./game";
   import LetterInput from "./LetterInput.svelte";
   import Guess from "./Guess.svelte";
+  import Dialog from "./Dialog.svelte";
 
   const game = createGameStore(words);
 
   window.__game__ = game;
-
-  game.subscribe((s) => console.log("state update:", s));
 
   function handleSubmit() {
     game.checkWord();
@@ -17,6 +16,10 @@
   function handleLetterUpdate(index, e) {
     game.selectLetterIndex(index, e.detail.value);
   }
+
+  function handlePlayAgain() {
+		game.playAgain();
+	}
 </script>
 
 <header>
@@ -33,7 +36,7 @@
         Guess cute silly words that we like to use a lot, like "BUNDLE" 😊
       </p>
       <p class="emptyGuesses">
-        You have four guesses to get it right. Good luck!
+        You have five guesses to get it right. Good luck!
       </p>
     {/if}
     {#each $game.guesses as word}
@@ -50,24 +53,38 @@
         />
       {/each}
     </div>
-    <button class="submit" disabled={$game.gameState !== states.PLAYING}
+    <button class="button submit" disabled={$game.gameState !== states.PLAYING}
       >Submit</button
     >
   </form>
 </main>
 {#if $game.gameState === states.VICTORY}
-  <p>You won!</p>
+  <Dialog>
+    <div class="card">
+      <h2>🥳 Hooray, you won!</h2>
+      <p>I knew you'd get it, you're so smart. Want to try another word?</p>
+      <button class="button fullWidth" on:click={handlePlayAgain}
+        >Play Again</button
+      >
+    </div>
+  </Dialog>
 {/if}
 {#if $game.gameState === states.DEFEAT}
-  <p>You LOST!</p>
+  <Dialog>
+    <div class="card">
+      <h2>😢 Oh no, you lost</h2>
+      <p>What a shame. Wanna give it another shot?</p>
+      <button class="button fullWidth" on:click={handlePlayAgain}
+        >Play Again</button
+      >
+    </div>
+  </Dialog>
 {/if}
 
 <style>
   :global(body) {
     display: flex;
     flex-direction: column;
-    background-color: var(--gray-9);
-    color: var(--gray-1);
   }
 
   h1 {
@@ -80,7 +97,7 @@
     z-index: 0;
     position: relative;
     max-inline-size: none;
-    color: var(--gray-1);
+    color: var(--color-text-1);
   }
 
   .heart {
@@ -122,18 +139,23 @@
   }
 
   form {
-    background: var(--gradient-8);
+    background: var(--color-background-gradient);
   }
 
-  .submit {
+  .button {
+    letter-spacing: var(--size-1);
+    color: var(--color-text-1);
+    background: var(--gradient-11);
+    user-select: none;
     border-radius: var(--radius-4);
+    border: none;
     font-weight: var(--font-weight-6);
     font-size: var(--font-size-4);
     text-transform: uppercase;
+  }
+
+  .submit {
     margin: 0 var(--size-4) var(--size-4);
-    letter-spacing: var(--size-1);
-    color: var(--gray-1);
-    background: var(--gradient-11);
   }
 
   .submit,
@@ -141,12 +163,34 @@
     border: none;
   }
 
+  .fullWidth {
+    width: 100%;
+  }
+
   .emptyGuesses {
     text-align: center;
     padding: 0 var(--size-2);
     width: 100%;
-    color: var(--gray-6);
+    color: var(--color-text-2);
     max-inline-size: 28ch;
     margin: var(--size-4) auto 0;
+  }
+
+  .card {
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-2);
+    padding: var(--size-4) var(--size-3);
+    margin: var(--size-2);
+    width: 100%;
+    border-radius: var(--radius-2);
+  }
+
+  h2 {
+    font-size: var(--font-size-5);
+  }
+
+  h2,
+  p {
+    margin-bottom: var(--size-3);
   }
 </style>

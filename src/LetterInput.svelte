@@ -13,14 +13,11 @@
   function handleIncrease() {
     const value = Math.min(possibleLetters.length - 1, selected + 1);
     dispatch("update", { value });
-
-    offset.set(getPct(value, possibleLetters.length));
   }
 
   function handleDecrease() {
     const value = Math.max(0, selected - 1);
     dispatch("update", { value });
-    offset.set(getPct(value, possibleLetters.length));
   }
 
   let disableIncrease = selected === possibleLetters.length - 1;
@@ -28,6 +25,7 @@
   $: {
     disableIncrease = selected === possibleLetters.length - 1;
     disableDecrease = selected === 0;
+    offset.set(getPct(selected, possibleLetters.length));
   }
 </script>
 
@@ -42,10 +40,7 @@
     <div class="display">
       <div class="window" style="transform: translateY({$offset}%);">
         {#each possibleLetters as letter, i}
-          <div
-            class="letter"
-            class:selected={i === selected}
-          >
+          <div class="letter" class:selected={i === selected}>
             {letter}
           </div>
         {/each}
@@ -65,16 +60,10 @@
     flex-grow: 1;
     overflow: hidden;
     z-index: 0;
-
-    --padding-vertical: var(--size-6);
   }
 
   .display {
-    height: calc(2 * var(--padding-vertical) + var(--size-8));
-  }
-
-  .window {
-    margin-top: var(--padding-vertical);
+    height: var(--size-8);
   }
 
   .letter {
@@ -84,14 +73,14 @@
     color: var(--gray-7);
     text-align: center;
     font-weight: var(--font-weight-6);
-    line-height: 1.2;
+    line-height: 1.3;
     user-select: none;
   }
 
   .letter.selected {
     opacity: 1;
-    background-color: var(--gray-8);
-    color: var(--gray-2);
+    background-color: var(--color-background-2);
+    color: var(--color-text-2);
   }
 
   button,
@@ -106,14 +95,15 @@
     appearance: none;
     margin: 0;
     width: 100%;
-    line-height: 1.4;
+    line-height: 1.5;
     font-size: var(--font-size-6);
 
-    color: var(--gray-2);
+    color: var(--color-text-1);
   }
 
   button:disabled {
-    color: var(--gray-9);
+    color: var(--color-text-2);
+    opacity: 0.1;
   }
 
   .hidden {

@@ -15,7 +15,7 @@
       class="letter"
       class:correct={guessLetter === winnerLetters[i]}
       class:incorrect={guessLetter !== winnerLetters[i]}
-      in:fade={{ delay: i * 60, easing: cubicInOut }}
+      in:fade={{ delay: i * 60, duration: 100, easing: cubicInOut }}
     >
       {#if guessLetter.trim()}
         {guessLetter}
@@ -40,8 +40,8 @@
     flex-basis: 1;
     width: 100%;
     font-size: var(--font-size-6);
-    font-weight: var(--font-weight-8);
-    line-height: 2.2;
+    font-weight: var(--font-weight-7);
+    line-height: 1.6;
     text-align: center;
     border-radius: var(--radius-2);
     box-shadow: var(--shadow-2);

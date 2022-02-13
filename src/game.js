@@ -10,7 +10,7 @@ import { writable } from "svelte/store";
  * @property {string} winner
  */
 
-export const MAX_GUESSES = 4;
+export const MAX_GUESSES = 5;
 export const LETTER_COUNT = 6;
 export const states = {
   VICTORY: "victory",
@@ -41,8 +41,16 @@ function getPossibleLetters(words) {
 /**
  * @returns {number[]}
  */
-function getSelectionIndices() {
-  return Array.from({ length: LETTER_COUNT }, () => 0);
+function getSelectionIndices(letters) {
+  if (!letters) {
+    return Array.from({ length: LETTER_COUNT }, () => 0);
+  }
+
+  const word = "BUNDLE";
+
+  return Array.from({ length: LETTER_COUNT }, (el, i) => {
+    return letters[i].indexOf(word[i]);
+  });
 }
 
 /**
@@ -56,7 +64,7 @@ function createInitialState(words) {
     winner: random(words),
     gameState: states.PLAYING,
     possibleLetters: getPossibleLetters(words),
-    selectedIndices: getSelectionIndices(),
+    selectedIndices: getSelectionIndices(getPossibleLetters(words)),
   };
 }
 
@@ -102,6 +110,15 @@ function selectLetterIndex(state, letter, newIndex) {
 }
 
 /**
+ * @param {GameState} state
+ */
+function playAgain(prevState) {
+  return createInitialState(
+    prevState.words.filter((w) => w !== prevState.winner)
+  );
+}
+
+/**
  * @param {string[]} words
  */
 export function createGameStore(words) {
@@ -115,5 +132,6 @@ export function createGameStore(words) {
     subscribe,
     checkWord: action(store, checkWord),
     selectLetterIndex: action(store, selectLetterIndex),
+    playAgain: action(store, playAgain),
   };
 }
