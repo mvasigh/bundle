@@ -76,6 +76,10 @@ function checkWord(state) {
     .map((selection, i) => state.possibleLetters[i][selection])
     .join("");
 
+  if (!state.words.includes(word)) {
+    throw new Error("Invalid word!");
+  }
+
   state.guesses.push(word);
 
   if (word === state.winner) {

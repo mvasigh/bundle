@@ -6,11 +6,24 @@
   import Dialog from "./Dialog.svelte";
 
   const game = createGameStore(words);
+	let rejected = false;
+	let rejectedTimeout;
 
   window.__game__ = game;
 
   function handleSubmit() {
-    game.checkWord();
+		try {
+			game.checkWord();
+		} catch(e) {
+			rejected = true;
+			if (rejectedTimeout) {
+				clearTimeout(rejectedTimeout);
+			}
+			rejectedTimeout = setTimeout(() => {
+				rejected = false;
+				clearTimeout(rejectedTimeout);
+			}, 600);
+		}
   }
 
   function handleLetterUpdate(index, e) {
@@ -53,7 +66,7 @@
         />
       {/each}
     </div>
-    <button class="button submit" disabled={$game.gameState !== states.PLAYING}
+    <button class="button submit" class:rejected disabled={$game.gameState !== states.PLAYING || rejected}
       >Submit</button
     >
   </form>
@@ -180,10 +193,17 @@
     background-color: var(--color-background);
     box-shadow: var(--shadow-2);
     padding: var(--size-4) var(--size-3);
-    margin: var(--size-2);
-    width: 100%;
+    margin: 0 auto;
+		width: 100%;
+		max-width: var(--max-width);
     border-radius: var(--radius-2);
   }
+
+	@media (max-width: 600px) {
+		.card {
+			margin: var(--size-2);
+		}
+	}
 
   h2 {
     font-size: var(--font-size-5);
@@ -193,4 +213,9 @@
   p {
     margin-bottom: var(--size-3);
   }
+
+	.rejected {
+		animation: var(--animation-shake-x);
+		animation-duration: 500ms;
+	}
 </style>
