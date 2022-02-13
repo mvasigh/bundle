@@ -1,8 +1,10 @@
 const words = [
   "BUBBLE",
+  "BUNGUS",
   "CUDDLE",
   "POOKIE",
   "GOOGIE",
+  "GOOBIE",
   "BLORSH",
   "POOKIS",
   "BUNDLE",
@@ -20,6 +22,7 @@ const words = [
   "BUBBLY",
   "BEEBAW",
   "HONEET",
+  "MOOGIE",
 ];
 
 export default [

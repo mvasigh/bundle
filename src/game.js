@@ -52,7 +52,7 @@ function getSelectionIndices() {
 function createInitialState(words) {
   return {
     words,
-    guesses: ["BUNDLE"],
+    guesses: [],
     winner: random(words),
     gameState: states.PLAYING,
     possibleLetters: getPossibleLetters(words),

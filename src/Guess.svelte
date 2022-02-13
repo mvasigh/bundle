@@ -17,7 +17,11 @@
       class:incorrect={guessLetter !== winnerLetters[i]}
       in:fade={{ delay: i * 60, easing: cubicInOut }}
     >
-      {guessLetter}
+      {#if guessLetter.trim()}
+        {guessLetter}
+      {:else}
+        &nbsp;
+      {/if}
     </span>
   {/each}
 </div>
@@ -40,7 +44,7 @@
     line-height: 2.2;
     text-align: center;
     border-radius: var(--radius-2);
-    box-shadow: var(--shadow-3);
+    box-shadow: var(--shadow-2);
   }
 
   .incorrect {
