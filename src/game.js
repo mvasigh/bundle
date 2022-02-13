@@ -77,6 +77,7 @@ function checkWord(state) {
     .join("");
 
   if (!state.words.includes(word)) {
+    console.log("Does not include word: ", word);
     throw new Error("Invalid word!");
   }
 

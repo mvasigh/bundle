@@ -11,6 +11,7 @@ const words = [
   "POOKIE",
   "GOOGIE",
   "GOOBIE",
+  "BOOGUS",
   "BLORSH",
   "POOKIS",
   "BUNDLE",
